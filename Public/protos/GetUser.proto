@@ -1,0 +1,73 @@
+﻿syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.Public";
+option java_outer_classname = "GetUserProto";
+option objc_class_prefix = "HLW";
+
+package Public;
+
+//官方实例
+// The greeting service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}
+
+//自定义实例
+
+//获取用户信息
+//rpc 指定请求的和响应类型
+service GetUser {
+//发送请求 并等待返回值 跟函数调用一致 
+ rpc GetFeature(Point) returns (Feature) {}
+  // 服务器端流式 RPC 客户端发送请求到服务器，拿到一个流去读取返回的消息序列。 客户端读取返回的流，直到里面没有任何消息
+  // rpc ListFeatures(Rectangle) returns (stream Feature) {}
+  //客户端流式 RPC ， 客户端写入一个消息序列并将其发送到服务器，同样也是使用流。一旦客户端完成写入消息，它等待服务器完成读取返回它的响应
+  // rpc RecordRoute(stream Point) returns (RouteSummary) {}
+  //一个 双向流式 RPC 是双方使用读写流去发送一个消息序列。两个流独立操作，因此客户端和服务器可以以任意喜欢的顺序读写：比如， 服务器可以在写入响应前等待接收所有的客户端消息，或者可以交替的读取和写入消息，或者其他读写的组合。 每个流中的消息顺序被预留
+  //rpc RouteChat(stream RouteNote) returns (stream RouteNote) {}
+}
+
+
+//接受参数类型
+message Point {
+  int32 latitude = 1;
+  int32 longitude = 2;
+}
+
+//返回参数
+message Feature {
+  string message=1;
+}
+
+
+//对象实例
+service GetUserList {
+ rpc GetList(pharm) returns (Userlist) {}
+}
+
+message pharm {
+  string name = 1;
+}
+
+//返回参数
+message Userlist {
+user userinfo=1;
+int32 no=2;
+}
+
+message user{
+ string name=1;
+ string detail=2;
+}
